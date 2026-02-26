@@ -24,11 +24,14 @@ heter:
     m1:
       sensor_type: &sensor_type_m1 'lidar'
       core_method: &core_method_m1 "point_pillar"
-
+      model_dir: &model_dir_m1 "saved_models/opv2v_lidar_pyramid/"
+      freeze: &freeze_m1 true
 
     m2:
       sensor_type: &sensor_type_m2 'camera'
       core_method: &core_method_m2 "lift_splat_shoot"
+      model_dir: &model_dir_m2  "saved_models/opv2v_camera_pyramid/"
+      freeze: &freeze_m2 true
 
 
 comment: ""
@@ -110,7 +113,7 @@ model:
     m1:
       core_method: *core_method_m1
       sensor_type: *sensor_type_m1
-      # model_dir: *model_dir_m1
+      model_dir: *model_dir_m1
       # freeze: *freeze_m1
 
       encoder_args:
@@ -138,7 +141,7 @@ model:
     m2:
       core_method: *core_method_m2
       sensor_type: *sensor_type_m2
-      # model_dir: *model_dir_m2
+      model_dir: *model_dir_m2
       # freeze: *freeze_m2
 
       encoder_args:
