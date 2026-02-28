@@ -20,9 +20,9 @@ Multimodal collaborative perception promises robust 3D object detection by fusin
 
 | Modality | AP@30 | AP@50 | AP@70 |
 |----------|--------|--------|--------|
-| LiDAR + Camera | **98.38** | **98.05** | **94.89** |
+| LiDAR + Camera | 98.30 | 97.94 | 94.64 |
 | LiDAR-only | 97.32 | 97.07 | 94.06 |
-| Camera-only | 80.81 | 69.63 | 44.82 |
+| Camera-only | **80.81** | **69.63** | **44.82** |
 
 **Key Result**: SiMO achieves state-of-the-art performance on OPV2V-H with graceful degradation when modalities fail.
 
@@ -362,13 +362,13 @@ python opencood/tools/inference.py \
 
 | Method | Modality | AP@30 | AP@50 | AP@70 | Modality Drop? |
 |--------|----------|-------|-------|-------|----------------|
-| SiMO-PF | LiDAR + Camera | **98.38** | **98.05** | **94.89** | No |
+| SiMO-PF | LiDAR + Camera | 98.30 | 97.94 | 94.64  | No |
 | SiMO-PF | LiDAR only | 97.32 | 97.07 | 94.06 | Yes |
 | SiMO-PF | Camera only | 80.81 | 69.63 | 44.82 | Yes |
 
 **Key Observations**:
 - SiMO maintains >97% AP@50 even when operating with LiDAR alone
-- Camera-only performance is competitive for near-field detection (AP@30 = 80.81)
+- Camera-only performance is competitive for low-precision detection (AP@30 = 80.81)
 - Graceful degradation pattern enables safe fallback strategies
 
 #### Comparison with Baselines
@@ -380,8 +380,8 @@ python opencood/tools/inference.py \
 | UniBEV (Wang et al., 2024a) | 91.71 | 91.73 | 0.00 |
 | AttFusion (Xu et al., 2022c) | - | 95.09 | 52.91 |
 | HEAL (Lu et al., 2024) | - | 98.00 | 60.48 |
-| SiMO (AttFusion w/o RD) | 95.26 | 94.02 | 49.69 |
-| **SiMO (Pyramid Fusion w/o RD)** (Ours) | **98.05** | **97.07** | **69.63** |
+| SiMO (AttFusion w/ RD) | 94.98 | 94.02 | 49.69 |
+| **SiMO (Pyramid Fusion w/ RD)** (Ours) | **97.94** | **97.07** | **69.63** |
 
 ### V2XSet Test Set
 
@@ -393,7 +393,7 @@ python opencood/tools/inference.py \
 
 | Method | LiDAR+Camera AP@50 | LiDAR-Only AP@50 | Camera-Only AP@50 |
 |--------|-------------------|------------------|-------------------|
-| SiMO-PF | 64.51 | 52.33 | 2.24 |
+| SiMO-PF | 51.82 | 52.33 | 2.24 |
 ---
 
 ## Model Zoo
