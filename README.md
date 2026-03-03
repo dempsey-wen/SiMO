@@ -2,6 +2,7 @@
 
 [![ICLR 2026](https://img.shields.io/badge/ICLR-2026-blue)](https://openreview.net/forum?id=h0iRgjTmVs)
 [![GitHub](https://img.shields.io/badge/GitHub-Repo-black?logo=github)](https://github.com/dempsey-wen/SiMO)
+[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Models-FFD21E?logo=huggingface&logoColor=white)](https://huggingface.co/DempseyWen/SiMO)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **Official PyTorch Implementation**
@@ -398,13 +399,27 @@ python opencood/tools/inference.py \
 
 ## Model Zoo
 
-Pretrained models will be released soon.
+Pretrained models are available on [Hugging Face](https://huggingface.co/DempseyWen/SiMO).
 
 | Model | Dataset | Config | Checkpoint |
 |-------|---------|--------|------------|
-| SiMO-PF | OPV2V-H | [Config](opencood/hypes_yaml/opv2v/MoreModality/lidar_camera_lamma3_pyramid_fusion.yaml) | Coming soon |
-| SiMO-AttFuse | OPV2V-H | [Config](opencood/hypes_yaml/opv2v/MoreModality/lidar_camera_lamma3_attfuse.yaml) | Coming soon |
+| SiMO-PF | OPV2V-H | [Config](opencood/hypes_yaml/opv2v/MoreModality/lidar_camera_lamma3_pyramid_fusion.yaml) | [🤗 HF](https://huggingface.co/DempseyWen/SiMO) |
+| SiMO-AttFuse | OPV2V-H | [Config](opencood/hypes_yaml/opv2v/MoreModality/lidar_camera_lamma3_attfuse.yaml) | [🤗 HF](https://huggingface.co/DempseyWen/SiMO) |
 
+### Download Models from Hugging Face
+
+```bash
+# Install huggingface-hub
+pip install huggingface-hub
+
+# Download all checkpoints
+python -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='DempseyWen/SiMO', repo_type='model')"
+
+# Or download specific model
+python -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id='DempseyWen/SiMO', filename='path/to/checkpoint.pth')"
+```
+
+The downloaded checkpoints will be saved to `~/.cache/huggingface/hub/`. You can also manually download from [Hugging Face](https://huggingface.co/DempseyWen/SiMO).
 ---
 
 ## Project Structure
