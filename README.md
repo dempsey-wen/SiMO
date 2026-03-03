@@ -9,6 +9,7 @@
 
 This repository contains the official implementation of the paper "Single-Modal-Operable Multimodal Collaborative Perception" (ICLR 2026).
 
+> **🎉 Update**: Pretrained checkpoints are now available! Download them from our [Hugging Face repository](https://huggingface.co/DempseyWen/SiMO).
 ---
 
 ## Abstract
@@ -403,8 +404,8 @@ Pretrained models are available on [Hugging Face](https://huggingface.co/Dempsey
 
 | Model | Dataset | Config | Checkpoint |
 |-------|---------|--------|------------|
-| SiMO-PF | OPV2V-H | [Config](opencood/hypes_yaml/opv2v/MoreModality/lidar_camera_lamma3_pyramid_fusion.yaml) | [🤗 HF](https://huggingface.co/DempseyWen/SiMO) |
-| SiMO-AttFuse | OPV2V-H | [Config](opencood/hypes_yaml/opv2v/MoreModality/lidar_camera_lamma3_attfuse.yaml) | [🤗 HF](https://huggingface.co/DempseyWen/SiMO) |
+| SiMO-PF | OPV2V-H | [Config](opencood/hypes_yaml/opv2v/MoreModality/lidar_camera_lamma3_pyramid_fusion.yaml) | [🤗 HF](https://huggingface.co/DempseyWen/SiMO/blob/main/SiMO_PF) |
+| SiMO-AttFuse | OPV2V-H | [Config](opencood/hypes_yaml/opv2v/MoreModality/lidar_camera_lamma3_attfuse.yaml) | [🤗 HF](https://huggingface.co/DempseyWen/SiMO/blob/main/SiMO_AF) |
 
 ### Download Models from Hugging Face
 
