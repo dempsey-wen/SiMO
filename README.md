@@ -1,6 +1,7 @@
 # SiMO: Single-Modal-Operable Multimodal Collaborative Perception
 
 [![ICLR 2026](https://img.shields.io/badge/ICLR-2026-blue)](https://openreview.net/forum?id=h0iRgjTmVs)
+[![arXiv](https://img.shields.io/badge/arXiv-2603.08240-b31b1b.svg)](https://arxiv.org/abs/2603.08240)
 [![GitHub](https://img.shields.io/badge/GitHub-Repo-black?logo=github)](https://github.com/dempsey-wen/SiMO)
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Models-FFD21E?logo=huggingface&logoColor=white)](https://huggingface.co/DempseyWen/SiMO)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
