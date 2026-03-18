@@ -260,36 +260,120 @@ python opencood/tools/train.py \
 
 **Output**: Model checkpoints saved to `saved_models/opv2v_lidar_pyramid/` and `saved_models/opv2v_camera_pyramid/`
 
-#### Step 2: Train with LAMMA Fusion
+#### Step 2: Align Multi-Modal Features
+
+This stage trains the modality aligners to align LiDAR and camera features to a common representation space.
+
+**Key Configuration**: The aligner trains independently for each modality with frozen encoders and backbones.
+
+##### 2.1 Train LiDAR Aligner
+
+Modify config to set `single_modality: lidar` and freeze camera aligner:
+
+```yaml
+model:
+  args:
+    single_modality: lidar
+    lidar_aligner:
+      freeze: false
+    camera_aligner:
+      freeze: true  # Freeze camera aligner
+    lidar_encoder:
+      freeze: true   # Freeze pretrained LiDAR encoder
+    lidar_backbone:
+      freeze: true   # Freeze pretrained LiDAR backbone
+    camera_encoder:
+      freeze: true   # Freeze pretrained camera encoder
+    camera_backbone:
+      freeze: true   # Freeze pretrained camera backbone
+```
+
+Then run training:
 
 ```bash
-# Train with pretrained branches frozen
 python opencood/tools/train.py \
     --hypes_yaml opencood/hypes_yaml/opv2v/MoreModality/lidar_camera_lamma3_pyramid_fusion.yaml
 ```
 
-**Configuration Notes**:
-- Set `model_dir` for each modality to load pretrained weights
-- Set `freeze: true` for pretrained components
-- Set `lamma.random_drop: false` for initial fusion training
+##### 2.2 Train Camera Aligner
 
-#### Step 3: Random Drop Fine-tuning
-
-Modify the config to enable random dropout:
+Modify config to set `single_modality: camera` and freeze LiDAR aligner:
 
 ```yaml
-lamma:
-  random_drop: true
-  lidar_drop_ratio: 0.5
+model:
+  args:
+    single_modality: camera
+    lidar_aligner:
+      freeze: true   # Freeze LiDAR aligner
+    camera_aligner:
+      freeze: false
+    # Keep encoders and backbones frozen
 ```
 
-Then resume training:
+Then run training:
+
+```bash
+python opencood/tools/train.py \
+    --hypes_yaml opencood/hypes_yaml/opv2v/MoreModality/lidar_camera_lamma3_pyramid_fusion.yaml
+```
+
+**Output**: Checkpoints saved with trained aligners. Load these checkpoints for the next stage.
+
+#### Step 3: Train LAMMA Fusion
+
+This stage trains the LAMMA fusion module with both aligners frozen.
+
+**Key Configuration**: Set `single_modality: false` to enable full multimodal fusion.
+
+```yaml
+model:
+  args:
+    single_modality: false   # Enable full multimodal fusion
+    lidar_aligner:
+      freeze: true    # Freeze both aligners
+    camera_aligner:
+      freeze: true
+    lamma:
+      random_drop: false  # Disable random drop in this stage
+      single_mode: false
+```
+
+Set `model_dir` to load the pretrained aligner checkpoints from the Align stage.
 
 ```bash
 python opencood/tools/train.py \
     --hypes_yaml opencood/hypes_yaml/opv2v/MoreModality/lidar_camera_lamma3_pyramid_fusion.yaml \
-    --model_dir saved_models/opv2v_lidarcamera_lamma3_pyramid_fusion/
+    --model_dir saved_models/opv2v_lidarcamera_aligned/
 ```
+
+#### Step 4: Random Drop Fine-tuning
+
+This final stage enables random modality dropout during training to ensure robust single-modal operation.
+
+**Key Configuration**: Set `lamma.random_drop: true` to enable random dropout.
+
+```yaml
+model:
+  args:
+    single_modality: false   # Still enable full multimodal fusion
+    lamma:
+      random_drop: true       # Enable random modality dropout
+      lidar_drop_ratio: 0.5  # 50% probability to drop LiDAR when dropping
+      single_mode: false
+```
+
+Then resume training with the Fusion stage checkpoint:
+
+```bash
+python opencood/tools/train.py \
+    --hypes_yaml opencood/hypes_yaml/opv2v/MoreModality/lidar_camera_lamma3_pyramid_fusion.yaml \
+    --model_dir saved_models/opv2v_lidarcamera_lamma3_fused/
+```
+
+**Training Notes**:
+- During training, with 50% probability, one modality is randomly dropped
+- This forces the network to maintain functional performance with either modality alone
+- The final checkpoint will have robust single-modal operability
 
 ---
 
